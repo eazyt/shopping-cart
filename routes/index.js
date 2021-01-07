@@ -21,7 +21,7 @@ router.get('/', function (req, res, next) {
       // console.log(products + "THIS IS TITLES")
       productsChunks.push(products.slice(i, i + chunkSize));
     }
-    console.log(productsChunks[1] + 'THIS PRODUCTSCHUNKS')
+    // console.log(productsChunks[1] + 'THIS PRODUCTSCHUNKS')
     // console.log(productsChunks + 'THIS IS CHUNKS')
     res.render('main/index', {
       title: 'Shopping Cart',
@@ -45,16 +45,17 @@ router.get('/', function (req, res, next) {
 
 
 router.get('/user/signup', (req, res) => { 
-  let message = req.flash('error')
-  console.log(message)
+  const message = req.flash('errors');
+  // const message = 'hello';
+  console.log(message + 'FROM SIGNUP ROUTE')
   console.log(message.length)
   res.render('accounts/register', {
     message: message,
-    // hasErrors: messages.length > 0,
-    // errors: req.flash('errors')
-    csrfToken: req.csrfToken(),
+    csrfToken: req.csrfToken()
   })
 })
+// hasErrors: messages.length > 0,
+// errors: req.flash('errors'),
 
 router.post('/user/signup', passport.authenticate('local.signup', {
   successRedirect: '/user/profile',
@@ -62,8 +63,12 @@ router.post('/user/signup', passport.authenticate('local.signup', {
   failureFlash: true
 }))
 
-router.get('/user/profile', (req, res) => { 
-  res.render('accounts/profile')
+router.get('/user/profile', (req, res) => {
+  // const messages = 'Hello';
+  const messages = req.flash('errors');
+  res.render('accounts/profile', {
+    messages: messages
+  })
 })
 
 module.exports = router;

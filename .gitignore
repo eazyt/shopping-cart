@@ -2,3 +2,4 @@ node_modules
 .gitignore
 font
 views/accounts/register-flash.ejs
+views/accounts/profile-copy.ejs

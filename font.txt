@@ -5,6 +5,17 @@
 
 Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores omnis consequuntur laborum, qui beatae nostrum cumque optio illo facilis rem quas voluptates quia, necessitatibus aut sapiente rerum. Animi, reprehenderit deleniti?
 
+  body('username').isEmail(),
+  // password must be at least 5 chars long
+  body('password').isLength({ min: 5 }),
+  (req, res) => {
+    // Finds the validation errors in this request and wraps them in an object with handy functions
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+
 
 <i class="fas fa-user"></i>
 
