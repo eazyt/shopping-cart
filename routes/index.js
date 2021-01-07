@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const Cart = require('../models/cart')
 
 const Product = require('../models/product')
 
@@ -14,7 +15,7 @@ router.get('/', function (req, res, next) {
       // console.log(products + "THIS IS TITLES")
       productsChunks.push(products.slice(i, i + chunkSize));
     }
-    // console.log(productsChunks[1] + 'THIS PRODUCTSCHUNKS')
+    // console.log(productsChunks[0] + 'THIS PRODUCTSCHUNKS')
     // console.log(productsChunks + 'THIS IS CHUNKS')
     res.render('main/index', {
       title: 'Shopping Cart',
@@ -35,6 +36,45 @@ router.get('/', function (req, res, next) {
   // })
   
 });
+
+// router.get('/add-to-cart/:id', function (req, res, next) {
+//   var productId = req.params.id;
+//   var cart = new Cart(req.session.cart ? req.session.cart : {});
+
+//   Product.findById(productId, function (err, product) {
+//     if (err) {
+//       return res.redirect('/');
+//     }
+//     cart.add(product, product.id);
+//     req.session.cart = cart;
+//     console.log(req.session.cart);
+//     res.redirect('/');
+//   });
+// });
+
+
+
+
+
+
+router.get('/add-to-cart/:id', (req, res, next) => { 
+  let productId = req.params.id;
+  let cart = new Cart(req.session.cart ? req.session.cart : {});
+
+
+  Product.findById(productId, (err, product) => { 
+    if (err) { 
+      return res.redirect('/');
+    }
+
+    cart.add(product, product.id);
+    req.session.cart = cart;
+
+    console.log(req.session.cart)
+
+    res.redirect('/user/profile')
+  })
+})
 
 
 
