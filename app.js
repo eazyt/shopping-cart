@@ -53,6 +53,10 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   secret: secret.secretKey,
+  cookie: {
+    maxAge: 14 * 24 * 60 * 1000, // 14h 24m 60s 1000ms = 14 day
+    httpOnly: true
+  },
   store: new MongoStore({
     url: secret.database,
     autoReconnect: true
@@ -65,7 +69,8 @@ app.use(passport.session());
 
 // for the user dropdown menu
 app.use((req, res, next) => {
-res.locals.login = req.isAuthenticated();
+  res.locals.login = req.isAuthenticated();
+  res.locals.session = req.session;
 next()
 })
 
