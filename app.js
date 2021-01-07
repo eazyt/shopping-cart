@@ -7,6 +7,8 @@ var logger = require('morgan');
 const engine = require('ejs-mate');
 const secret = require('./config/secret')
 const session = require('express-session')
+const flash = require('connect-flash')
+const passport = require('passport')
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -27,6 +29,8 @@ mongoose.connect(secret.database, {
   .catch((e) => {
     console.log(`could not connect to database`, e)
   })
+
+require('./config/passport')
 
 // view engine setup
 // app.use(express.static(__dirname + '/public'));
@@ -49,6 +53,11 @@ app.use(session({
   // })
 }));
 
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
@@ -63,11 +72,16 @@ app.use(function(err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
+  //  taking care of flash message to show on all templates
+  res.locals.errors = req.flash("errors");
+  res.locals.success = req.flash("success");
+
   // render the error page
   res.status(err.status || 500);
   res.render('main/error');
 });
 
+  
 // module.exports = app;
 app.listen(PORT, () => { 
   console.log(`App running and listening on port ${PORT}`)

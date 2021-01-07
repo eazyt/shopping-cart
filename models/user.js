@@ -36,6 +36,19 @@ var UserSchema = new Schema({
   }]
 });
 
+
+// encrypt passowrd
+UserSchema.methods.encryptPassword = function (password) {
+  return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
+}
+
+// validate password
+/* compare password in the database and the one that the user type in */
+UserSchema.methods.validatePassword = function (password) {
+return bcrypt.compareSync(password, this.password);
+}
+
+
 /*  Hash the password before we even save it to the database */
 // UserSchema.pre('save', function (next) {
 //   var user = this;
@@ -52,8 +65,9 @@ var UserSchema = new Schema({
 
 /* compare password in the database and the one that the user type in */
 // UserSchema.methods.comparePassword = function (password) {
-//   return bcrypt.compareSync(password, this.password);
+  // return bcrypt.compareSync(password, this.password);
 // }
+
 
 // UserSchema.methods.gravatar = function (size) {
 //   if (!this.size) size = 200;

@@ -15,22 +15,34 @@ passport.deserializeUser(function(id, done) {
 
 
 //Middleware
-passport.use('local-login', new LocalStrategy({
+passport.use('local.signup', new LocalStrategy({
   usernameField: 'email',
   passwordField: 'password',
   passReqToCallback: true
 }, function(req, email, password, done) {
   User.findOne({ email: email}, function(err, user) {
     if (err) return done(err);
-
-    if (!user) {
-      return done(null, false, req.flash('loginMessage', 'No user has been found'));
+    if (user) { 
+      return done(null, false, {message: "Email already exist"})
     }
 
-    if (!user.comparePassword(password)) {
-      return done(null, false, req.flash('loginMessage', 'Oops! Wrong Password pal'));
-    }
-    return done(null, user);
+    const newUser = new User();
+    newUser.email = email;
+    newUser.password = newUser.encryptPassword(password);
+    newUser.save((err, result) => { 
+      if (err) return done(err);
+      return done(null, newUser)
+    })
+
+
+    // if (!user) {
+    //   return done(null, false, req.flash('loginMessage', 'No user has been found'));
+    // }
+
+    // if (!user.comparePassword(password)) {
+    //   return done(null, false, req.flash('loginMessage', 'Oops! Wrong Password pal'));
+    // }
+    // return done(null, user);
   });
 }));
 
