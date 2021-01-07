@@ -1,6 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const Product = require('../models/product')
+const csrf = require('csurf')
+
+const csrfProtection = csrf()
+router.use(csrfProtection)
+
+
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -20,13 +26,6 @@ router.get('/', function (req, res, next) {
     });
   })
 
-
-
-
-
-
-
-
   // This works with
   //   <% products.forEach(function (product) { %>
   //        <%= product.imagePath %>
@@ -39,22 +38,17 @@ router.get('/', function (req, res, next) {
   //   });
   // })
   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 });
+
+
+router.get('/user/signup', (req, res) => { 
+  res.render('accounts/register', {
+    csrfToken: req.csrfToken()
+  })
+})
+
+router.post('/user/signup', (req, res) => { 
+  res.redirect('/')
+})
 
 module.exports = router;

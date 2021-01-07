@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const engine = require('ejs-mate');
 const secret = require('./config/secret')
+const session = require('express-session')
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -38,6 +39,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+  resave: false,
+  saveUninitialized: false,
+  secret: secret.secretKey,
+  // store: new MongoStore({
+  //   url: secret.database,
+  //   autoReconnect: true
+  // })
+}));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
