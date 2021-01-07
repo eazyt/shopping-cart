@@ -12,7 +12,7 @@
         </div>
         <% } %>
 
-          <form method="post">
+          <form action="/user/signin" method="post">
 
             <h1> Login </h1>
             <div class="form-group">
@@ -23,7 +23,7 @@
               <label="name">Password: </label>
                 <input type="password" class="form-control" name="password">
             </div>
-
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <button type="submit" class="btn btn-success">Submit</button>
 
           </form>
