@@ -7,10 +7,13 @@ var logger = require('morgan');
 const engine = require('ejs-mate');
 const secret = require('./config/secret')
 const session = require('express-session')
+const MongoStore = require('connect-mongo')(session)
 const flash = require('connect-flash')
 const passport = require('passport')
-const bodyParser = require('body-parser')
 const validator = require('express-validator')
+
+
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -50,24 +53,35 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   secret: secret.secretKey,
-  // store: new MongoStore({
-  //   url: secret.database,
-  //   autoReconnect: true
-  // })
+  store: new MongoStore({
+    url: secret.database,
+    autoReconnect: true
+  })
 }));
 
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
+// for the user dropdown menu
+app.use((req, res, next) => {
+res.locals.login = req.isAuthenticated();
+next()
+})
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+// app.use(function (req, res, next) {
+//   res.locals.user = req.user;
+//   next();
+// });
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
+
+
+// app.get('*', function (req, res, next) {
+//   // res.locals.cart = req.session.cart;
+//   res.locals.user = req.user;
+//   next();
+// });
+
 
 // error handler
 app.use(function(err, req, res, next) {
@@ -84,7 +98,18 @@ app.use(function(err, req, res, next) {
   res.render('main/error');
 });
 
-  
+
+app.use('/user', usersRouter);
+app.use('/', indexRouter);
+
+// catch 404 and forward to error handler
+app.use(function (req, res, next) {
+  // next(createError(404));
+  let err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
+
 // module.exports = app;
 app.listen(PORT, () => { 
   console.log(`App running and listening on port ${PORT}`)

@@ -11,7 +11,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/user/profile">Free Online Shooping</a>
+          <a class="navbar-brand" href="/">Free Online Shooping</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
@@ -21,18 +21,11 @@
                 aria-expanded="false"><i class="fas fa-user"></i> User Management<span class="caret"></span></a>
               <ul class="dropdown-menu">
 
-                <% if(login) { %>
 
-                  <li><a href="/user/profile"><i class="fas fa-user-circle"></i> User Account</a></li>
+                  <li><a href="/users/profile"><i class="fas fa-user-circle"></i> User Account</a></li>
                   <li role="separator" class="divider"></li>
-                  <li><a href="/user/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-                  <% } else { %>
-                    <li><a href="/user/signup"><i class="fas fa-user-circle"></i> Sign Up</a></li>
-                    <li role="separator" class="divider"></li>
-                    <li><a href="/user/signin"><i class="fas fa-sign-out-alt"></i> Sign In</a></li>
-
-                <% } %>
-
+                  <li><a href="/users/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+      
 
               </ul>
             </li>
