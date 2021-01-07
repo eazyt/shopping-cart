@@ -1,9 +1,11 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
+const mongoose = require('mongoose')
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const engine = require('ejs-mate');
+const secret = require('./config/secret')
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -11,6 +13,19 @@ var usersRouter = require('./routes/users');
 var app = express();
 
 const PORT = process.env.PORT || 3020; 
+
+mongoose.connect(secret.database, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: true
+  })
+  .then(() => {
+    console.log(`succefully connected to the Database`)
+  })
+  .catch((e) => {
+    console.log(`could not connect to database`, e)
+  })
 
 // view engine setup
 // app.use(express.static(__dirname + '/public'));
