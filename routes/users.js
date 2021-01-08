@@ -17,6 +17,7 @@ router.use(csrfProtection)
   //   messages: messages
   // })
 // })
+
 router.get('/profile', isLoggedIn, (req, res) => {
   // const messages = 'Hello';
   const messages = req.flash('errors');
