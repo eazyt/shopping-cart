@@ -18,52 +18,57 @@ mongoose.connect(secret.database, {
 
 const products = [
   new Product({
-  imagePath: 'http://placeimg.com/640/480/science',
+  imagePath: 'https://images.app.goo.gl/pCSLqMQj2yAPwGdx6',
   title: 'The God\'s must be Crazy',
   description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores omnis consequuntur laborum, qui beatae nostrum cumque optio illo facilis rem quas voluptates quia, necessitatibus aut sapiente rerum. Animi, reprehenderit deleniti?',
   price: 10.99
   }),
   new Product({
-  imagePath: 'http://placeimg.com/640/480/science',
-  title: 'The Avengers - Age of Ultron',
+  imagePath: 'https://images.app.goo.gl/P5sR5n57bJ4SSBZB9',
+  title: 'The Avengers - End Game',
   description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores omnis consequuntur laborum, qui beatae nostrum cumque optio illo facilis rem quas voluptates quia, necessitatibus aut sapiente rerum. Animi, reprehenderit deleniti?',
-  price: 11.99
+  price: 101.99
   }),
   new Product({
-  imagePath: 'http://placeimg.com/640/480/science',
+  imagePath: 'https://images.app.goo.gl/NL7yW7kiHZUZijqD9',
   title: 'Tron',
   description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores omnis consequuntur laborum, qui beatae nostrum cumque optio illo facilis rem quas voluptates quia, necessitatibus aut sapiente rerum. Animi, reprehenderit deleniti?',
   price: 100.99
   }),
+
   new Product({
-  imagePath: 'http://placeimg.com/640/480/science',
-  title: 'The End Game',
-  description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores omnis consequuntur laborum, qui beatae nostrum cumque optio illo facilis rem quas voluptates quia, necessitatibus aut sapiente rerum. Animi, reprehenderit deleniti?',
-  price: 99.10
-  }),
-  new Product({
-  imagePath: 'http://placeimg.com/640/480/science',
-  title: 'The Fast and Slow',
+  imagePath: 'https://images.app.goo.gl/TQ5epJo6LEUyN3dP9',
+  title: 'Infinity',
   description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores omnis consequuntur laborum, qui beatae nostrum cumque optio illo facilis rem quas voluptates quia, necessitatibus aut sapiente rerum. Animi, reprehenderit deleniti?',
   price: 22.75
   }),
+
   new Product({
-  imagePath: 'http://placeimg.com/640/480/science',
-  title: 'Basic Insticnt',
-  description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores omnis consequuntur laborum, qui beatae nostrum cumque optio illo facilis rem quas voluptates quia, necessitatibus aut sapiente rerum. Animi, reprehenderit deleniti?',
-  price: 29.50
-  }),
-  new Product({
-  imagePath: 'http://placeimg.com/640/480/science',
-  title: 'Home Alone',
+  imagePath: 'https://images.app.goo.gl/1H4m5bBycJCmFCGT6',
+  title: 'The Martian',
   description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores omnis consequuntur laborum, qui beatae nostrum cumque optio illo facilis rem quas voluptates quia, necessitatibus aut sapiente rerum. Animi, reprehenderit deleniti?',
   price: 19.00
   }),
+
+
   new Product({
-  imagePath: 'http://placeimg.com/640/480/science',
-  title: 'Planet of Apes',
+  imagePath: 'https://images.app.goo.gl/nQikXeZH5hfmsqEY6',
+  title: 'Gladiator',
   description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores omnis consequuntur laborum, qui beatae nostrum cumque optio illo facilis rem quas voluptates quia, necessitatibus aut sapiente rerum. Animi, reprehenderit deleniti?',
-  price: 219.00
+  price: 1899.00
+  }),
+
+
+
+
+
+
+
+  new Product({
+  imagePath: 'https://images.app.goo.gl/nWMvPqbrQ7Eupp9r6',
+  title: 'Clash of the Titans',
+  description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores omnis consequuntur laborum, qui beatae nostrum cumque optio illo facilis rem quas voluptates quia, necessitatibus aut sapiente rerum. Animi, reprehenderit deleniti?',
+  price: 2139.00
   }),
 ]
 

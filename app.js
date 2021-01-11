@@ -88,26 +88,26 @@ next()
 
 
 
-app.use((req, res, next) => { 
-  if (req.user) { 
-    console.log('THERE IS A REQ.USER!!!!!!');
-  } else {
+// app.use((req, res, next) => { 
+//   if (req.user) { 
+//     console.log('THERE IS A REQ.USER!!!!!!');
+//   } else {
     
-    console.log('NO REQ.USER FOUND!!!!!');
-  }
-  next()
-})
+//     console.log('NO REQ.USER FOUND!!!!!');
+//   }
+//   next()
+// })
 
 
-app.use((req, res, next) => { 
-  if (req.session) {
-    console.log('THERE IS REQ.SESSION');
-  } else { 
+// app.use((req, res, next) => { 
+//   if (req.session) {
+//     console.log('THERE IS REQ.SESSION');
+//   } else { 
 
-    console.log('THERE IS NO REQ.SESSSION');
-  }
-  next()
-})
+//     console.log('THERE IS NO REQ.SESSSION');
+//   }
+//   next()
+// })
 // app.use((req, res, next) => { 
 //   if (user) {
 //     console.log('THERE IS REQ.SESSION.USER');
