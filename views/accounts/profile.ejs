@@ -3,22 +3,35 @@
 
   <div class="card-profile container">
 
-  <% if (messages.length> 0) { %>
-    <div class="alert alert-danger alert-dismissible">
-      <button type="button" class="close" data-dismmiss="alert" aria-label="close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-      <%= messages %>
-    </div>
-    <% } %>
-
     <h2 class="text-center">User Profile Card</h2>
 
-    <div style="margin: 24px 0;">
-      <a href="#" class="my-a-tags-profile"><i class="fa fa-dribbble"></i></a>
-      <a href="#" class="my-a-tags-profile"><i class="fa fa-twitter"></i></a>
-      <a href="#" class="my-a-tags-profile"><i class="fa fa-linkedin"></i></a>
-      <a href="#" class="my-a-tags-profile"><i class="fa fa-facebook"></i></a>
-    </div>
-    <a href="/" class="btn btn-primary profile-btn">Edit Profile</a>
+    <% orders.forEach(function(order){ %>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <ul class="list-group">
+              <% order.items.forEach(function(item){ %>
+                
+              
+              <li class="list-group-item">
+                <span class="badge badge-success">$ <%= item.price %></span>
+                <%= item.item.title %> | <%= item.qty %> units
+                
+
+              </li>
+              <% }) %>
+            </ul>
+          </div>
+        
+          <div class="panel-footer text-right">
+            <strong> Total Price: $ <%= order.cart.totalPrice %> </strong>
+          </div>
+      </div>
+    <% }) %>
+
   </div>
+  
+
+
+
+    
+

@@ -50,8 +50,8 @@ app.use(validator());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
-  resave: false,
-  saveUninitialized: false,
+  resave: true,
+  saveUninitialized: true,
   secret: secret.secretKey,
   cookie: {
     maxAge: 14 * 24 * 60 * 1000, // 14h 24m 60s 1000ms = 14 day
@@ -69,15 +69,54 @@ app.use(passport.session());
 
 // for the user dropdown menu
 app.use((req, res, next) => {
+  // req.session.user = user;
+  res.locals.user = req.user;
+console.log(req.user)
+
+next()
+})
+app.use((req, res, next) => {
+  // req.session.user = user;
+  res.locals.user = req.user;
   res.locals.login = req.isAuthenticated();
   res.locals.session = req.session;
+
 next()
 })
 
-// app.use(function (req, res, next) {
-//   res.locals.user = req.user;
-//   next();
-// });
+
+
+
+
+app.use((req, res, next) => { 
+  if (req.user) { 
+    console.log('THERE IS A REQ.USER!!!!!!');
+  } else {
+    
+    console.log('NO REQ.USER FOUND!!!!!');
+  }
+  next()
+})
+
+
+app.use((req, res, next) => { 
+  if (req.session) {
+    console.log('THERE IS REQ.SESSION');
+  } else { 
+
+    console.log('THERE IS NO REQ.SESSSION');
+  }
+  next()
+})
+// app.use((req, res, next) => { 
+//   if (user) {
+//     console.log('THERE IS REQ.SESSION.USER');
+//   } else { 
+
+//     console.log('THERE IS NO REQ.SESSSION.USER');
+//   }
+//   next()
+// })
 
 
 
@@ -100,7 +139,9 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('main/error');
+  res.render('main/error', {
+    errors: errors
+  });
 });
 
 
