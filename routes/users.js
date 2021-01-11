@@ -33,24 +33,6 @@ router.get('/profile', isLoggedIn, (req, res) => {
       order.items = cart.generateArray();
     });
 
-    // orders.forEach(function (order) {
-    //   order.items.forEach(function (item) {
-
-        // console.log(item.item.title + 'THIS IS ITEM.TITLE');
-        // console.log(item.qty + 'THIS IS QTY');
-        // console.log(item.price + 'THIS IS PRICE');
-
-        //  entries = Object.entries(item)
-        // for (const [key, value] of entries)
-        // console.log(key + 'THIS IS OBJECT KEY');
-        // console.log(value.item.title + 'THIS IS OBJECT VALUE.TITLE');
-        // console.log(JSON.stringify(key) + JSON.stringify(value) + 'THIS IS OBJECT KEY & VALUE');
-
-    //   })
-    // })
-
-    // res.send(orders)
-
     res.render('accounts/profile', {
       orders: orders,
     });
@@ -104,9 +86,6 @@ router.post('/signup', passport.authenticate('local.signup', {
 
 router.get('/signin', (req, res) => {
   const message = req.flash('errors');
-  // const message = 'hello';
-  // console.log(message + 'FROM SIGNUP ROUTE')
-  // console.log(message.length)
   res.render('accounts/login', {
     message: message,
     csrfToken: req.csrfToken()
@@ -127,13 +106,6 @@ router.post('/signin', passport.authenticate('local.signin', {
     // successRedirect: '/user/profile'
 })
 
-
-
-// exports.logout = function (req, res) {
-//   req.session.destroy(function () {
-//     res.redirect('/');
-//   });
-// };
 
 module.exports = router;
 

@@ -20,12 +20,9 @@ router.get('/', function (req, res, next) {
     let productsChunks = [];
     let chunkSize = 3;
     for (let i = 0; i < products.length; i += chunkSize) { 
-      // console.log(products + "THIS IS TITLES")
       productsChunks.push(products.slice(i, i + chunkSize));
     }
-    console.log(err)
-    // console.log(productsChunks[0] + 'THIS PRODUCTSCHUNKS') 
-    // console.log(productsChunks + 'THIS IS CHUNKS')
+
     res.render('main/index', {
       title: 'Shopping Cart',
       products: productsChunks,
@@ -35,19 +32,6 @@ router.get('/', function (req, res, next) {
       error: errorMsg
     });
   })
-
-  // This works with
-  //   <% products.forEach(function (product) { %>
-  //        <%= product.imagePath %>
-  //        <%= product.price %>
-  //   <% } %>
-  // Product.find((err, products) => { 
-  //   res.render('main/index', {
-  //     title: 'Shopping Cart',
-  //     products: products
-  //   });
-  // })
-  
 });
 
 
@@ -64,7 +48,7 @@ router.get('/add-to-cart/:id', (req, res, next) => {
     cart.add(product, product.id);
     req.session.cart = cart;
 
-    console.log(req.session.cart)
+    // console.log(req.session.cart)
 
     res.redirect('/')
   })
@@ -101,8 +85,8 @@ router.get('/shopping-cart', isLoggedIn, function (req, res, next) {
   // if (!req.session.cart) {
   //   return res.render('main/empty-shopping-cart', {
   //     products: 0,
-  //     error: req.flash('error', 'oops!!')[1]
-  //     // error: 'No items in cartz'
+  //     errors: req.flash('errors', 'oops!!')[1]
+  //     // errors: 'No items in cartz'
   //   });
   // }
   let cart = new Cart(req.session.cart);
@@ -114,41 +98,6 @@ router.get('/shopping-cart', isLoggedIn, function (req, res, next) {
     errors: req.flash('errors')
   });
 });
-
-
-// ####################################DELETED CAUSE I DIDN'T NEED IT ANYMORE, MADE NEW ROUTE#######################
-
-
-// router.get('/checkout', (req, res, next) => {
-//     if (!req.session.cart) {
-//       return res.redirect('/shopping-cart');
-//   }
-    
-//     let cart = new Cart(req.session.cart);
-//     let errMsg = req.flash('error')[0];
-//     res.render('main/checkout', {
-//       total: cart.totalPrice,
-//       errMsg: errMsg,
-//       noError: !errMsg,
-      
-//     });
-    
-// });
-
-
-
-
-// 
-
-
-
-
-
-
-
-
-
-
 
 router.post('/checkout', isLoggedIn, function (req, res) {
     if (!req.session.cart) {
@@ -176,48 +125,23 @@ router.post('/checkout', isLoggedIn, function (req, res) {
     }
   })
   .then((customer) => {
-      console.log("PASS 1")
-      
       return stripe.charges.create({
         amount: req.body.amount * 100,
         currency: 'USD',
         customer: customer.id
-      },
-        // console.log(JSON.stringify(charges.id) + 'INSIDE A RETURN')
-      );
+      });
     })
     .then((err, charge) => {
-      // if (err) {
-      //   req.flash('error', err.message);
-      //   res.redirect('/');
-      // }
-      // console.log(JSON.stringify(req.session))
-      // console.log(JSON.stringify(req.session.user) + "THIS IS THE SESSION USER")
-      // console.log(req.user + "THIS IS THE REQ USER")
-      // console.log(JSON.stringify(charge.id) + 'THIS CHARGE')
-      // const charges = stripe.charges.list({
-      //   limit: 1,
-      // });
-
-      // charges.id = charge.id
-
-      // console.log(JSON.stringify(charges) + 'THIS IS CHARGE')
-      console.log("PASS 2")
-      
-      
-
-      
       const order = new Order();
       order.user = req.user;
       order.cart = cart;
       order.name = req.body.name;
-      // order.paymenetId= charge.id;
+      // order.paymenetId= charge._id;
       order.street = req.body.address_street;
-        order.city = req.body.address_city;
-        order.zip_code = req.body.address_postal_code;
-        order.state = req.body.address_state;
+      order.city = req.body.address_city;
+      order.zip_code = req.body.address_postal_code;
+      order.state = req.body.address_state;
       order.country = req.body.address_country;
-      console.log("PASS 3")
       
       order.save((err, result) => {
         if (err) { 
@@ -226,27 +150,16 @@ router.post('/checkout', isLoggedIn, function (req, res) {
             error: error
           })
         }
-        console.log("PASS 4")
         req.session.cart = null;
         req.flash('success', 'Thank you for shopping with us!!!');
         res.redirect('/');
       });
 
-      
-      
-
-
-
-      // req.session.cart = null;
-      // req.flash('success', 'Thank you for shopping with us!!!');
-
-      // res.redirect('/');
     })
     .catch((err) => { 
       req.flash('error', err.message);
       return res.redirect('/shopping-cart');
     })
-    
 })
 
 module.exports = router;
